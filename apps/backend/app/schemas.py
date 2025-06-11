@@ -1,23 +1,32 @@
 from pydantic import BaseModel
 from datetime import date
-from typing import List, Optional
+from typing import Optional
 
-class UserCreate(BaseModel):
+class UserBase(BaseModel):
     name: str
-    weight_kg: float
+    weight: float
 
-class UserResponse(UserCreate):
+class UserCreate(UserBase):
+    pass
+
+class User(UserBase):
     id: int
+    
     class Config:
         orm_mode = True
 
-class WaterLogCreate(BaseModel):
-    amount_ml: int
-
-class WaterLogResponse(BaseModel):
+class WaterConsumptionBase(BaseModel):
+    user_id: int
     date: date
-    amount_ml: int
-    meta_ml: int
+    consumed_ml: float
+
+class WaterConsumptionCreate(WaterConsumptionBase):
+    pass
+
+class WaterConsumption(WaterConsumptionBase):
+    id: int
+    goal_ml: float
     reached_goal: bool
+    
     class Config:
         orm_mode = True

@@ -1,23 +1,19 @@
-from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Date, Float, Boolean
 from .database import Base
-import datetime
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    weight_kg = Column(Float, nullable=False)
-    water_logs = relationship("WaterLog", back_populates="user")
+    name = Column(String, index=True)
+    weight = Column(Float)
 
-
-class WaterLog(Base):
-    __tablename__ = 'water_logs'
+class WaterConsumption(Base):
+    __tablename__ = "water_consumption"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    date = Column(Date, default=datetime.date.today)
-    amount_ml = Column(Integer, default=0)
-
-    user = relationship("User", back_populates="water_logs")
+    user_id = Column(Integer, index=True)
+    date = Column(Date)
+    consumed_ml = Column(Float)
+    goal_ml = Column(Float)
+    reached_goal = Column(Boolean, default=False)
