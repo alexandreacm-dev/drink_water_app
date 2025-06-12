@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start:frontend": "cd apps/frontend && yarn start",
+    "start:frontend": "cd apps/frontend && yarn dev",
     "start:mobile": "cd apps/mobile && yarn start",
     "start:backend": "uvicorn apps.backend.app.main:app --reload",
     "build": "turbo run build"
